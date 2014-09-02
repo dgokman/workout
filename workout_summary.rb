@@ -28,4 +28,11 @@ def load_workout_data(filename)
   workouts
 end
 
-# YOUR CODE HERE
+data = load_workout_data('workouts.csv')
+workouts = []
+(1..6).each do |id|
+  workouts << Workout.new(id, data)
+end
+
+tp workouts
+

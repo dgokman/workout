@@ -33,25 +33,27 @@ class Workout
   end
 
   def get_duration
-    duration = 0
-    duration_arr = []
+    @duration = 0
     @exercises.each do |exercise|
-      duration_arr << exercise[:duration]
+      @duration += exercise[:duration_in_min]
     end
-    @duration = duration_arr.inject { |total, n| total + n }
+    @duration
   end
 
   def get_calories_burned
-    calories_burned = 0
+    @calories_burned = 0
     @exercises.each do |exercise|
      if exercise[:category] == "cardio" && exercise[:intensity] == "low"
-       @calories_burned = exercise[:duration] * 10
+       @calories_burned += (exercise[:duration_in_min].to_f * 10)
      elsif exercise[:category] == "cardio" && exercise[:intensity] == "medium"
-       @calories_burned = exercise[:duration] * 8
+       @calories_burned += (exercise[:duration_in_min].to_f * 8)
      elsif exercise[:intensity] == "low"
-       @calories_burned = exercise[:duration] * 5
+       @calories_burned += (exercise[:duration_in_min].to_f * 5)
      else
-       @calories_burned = exercise[:duration] * 6
+       @calories_burned += (exercise[:duration_in_min].to_f * 6)
      end
-    @calories_burned
+
+    end
+  @calories_burned
+  end
 end
