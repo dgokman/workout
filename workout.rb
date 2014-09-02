@@ -1,16 +1,16 @@
 class Workout
-  attr_reader :id, :exercises
+  attr_reader :id, :date, :type
 
   def initialize(id, workouts)
     @id = id
     @date = workouts[id][:date]
     @exercises = workouts[id][:exercises]
-    @type = get_type
-    @duration = get_duration
-    @calories_burned = get_calories_burned
+    @type = type
+    @duration = duration
+    @calories_burned = calories_burned
   end
 
-  def get_type
+  def type
     strength = 0
     cardio = 0
     other = 0
@@ -32,7 +32,7 @@ class Workout
     end
   end
 
-  def get_duration
+  def duration
     @duration = 0
     @exercises.each do |exercise|
       @duration += exercise[:duration_in_min]
@@ -40,14 +40,14 @@ class Workout
     @duration
   end
 
-  def get_calories_burned
+  def calories_burned
     @calories_burned = 0
     @exercises.each do |exercise|
-     if exercise[:category] == "cardio" && exercise[:intensity] == "low"
+     if exercise[:category] == "cardio" && exercise[:intensity] == "high"
        @calories_burned += (exercise[:duration_in_min].to_f * 10)
      elsif exercise[:category] == "cardio" && exercise[:intensity] == "medium"
        @calories_burned += (exercise[:duration_in_min].to_f * 8)
-     elsif exercise[:intensity] == "low"
+     elsif exercise[:category] == "strength" || exercise[:intensity] == "low"
        @calories_burned += (exercise[:duration_in_min].to_f * 5)
      else
        @calories_burned += (exercise[:duration_in_min].to_f * 6)
